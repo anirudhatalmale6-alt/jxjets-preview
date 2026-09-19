@@ -6,6 +6,14 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var all = window.JX || [];
 
+  /* Photographs live in their own generated file so the inventory and the
+     imagery can be regenerated independently. Merge them on by reference. */
+  var photos = window.JX_PHOTOS || {};
+  all.forEach(function (l) {
+    var ph = photos[l.ref];
+    if (ph) { l.img = ph.img; l.credit = ph; }
+  });
+
   var f = {
     q: '', cat: '', mfr: '', sort: 'price-desc',
     maxPrice: Infinity, minYear: 0
@@ -47,17 +55,17 @@
       '<path d="M78 103 l14 0"/>';
   }
 
-  /* The card image is drawn, not downloaded. Each aircraft gets a stable hue
-     from its data, so the grid is varied without a single external file —
-     and without borrowing anybody's photographs. */
   /* A real photograph wins whenever there is one. The drawn plate is the
      fallback, not the goal — the day the inventory carries images it needs no
      code change, only an `img` on the record. */
   function plate(l, big) {
     if (l.img) {
+      var cr = l.credit || {};
       return '<img src="' + esc(l.img) + '" alt="' +
         esc(l.year + ' ' + l.mfr + ' ' + l.model) + '" loading="lazy" ' +
-        'style="width:100%;height:100%;object-fit:cover">';
+        'style="width:100%;height:100%;object-fit:cover">' +
+        (cr.auteur ? '<span class="credit">' + esc(cr.auteur) + ' · ' +
+                     esc(cr.licence || '') + '</span>' : '');
     }
     var h = l.hue, h2 = (h + 26) % 360;
     var id = 'g' + l.ref.replace(/\W/g, '') + (big ? 'b' : '');
@@ -175,6 +183,11 @@
     $('#dannee').textContent = l.year;
     $('#dref').textContent = l.ref;
     $('#detat').textContent = l.status;
+    var cr = l.credit;
+    $('#dcredit').innerHTML = cr
+      ? 'Photograph: ' + esc(cr.auteur) + ' — ' + esc(cr.licence) +
+        ' — <a href="' + esc(cr.source) + '" target="_blank" rel="noopener">source</a>'
+      : 'Illustration drawn in the page. No photograph is reproduced for this aircraft.';
     var d = $('#detail');
     if (d.showModal) { d.showModal(); } else { d.setAttribute('open', ''); }
   }

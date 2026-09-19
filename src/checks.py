@@ -88,7 +88,9 @@ def main():
         avis = pg.evaluate("(document.querySelector('.avis')||{}).textContent||''")
         t('the demonstration banner is present', 'Demonstration' in avis)
         t('the banner says no real listing is reproduced',
-          'No real listing' in avis or 'no real listing' in avis.lower())
+          'no listing' in avis.lower() and 'is reproduced' in avis.lower())
+        t('the banner is honest about the photographs being real and licensed',
+          'wikimedia commons' in avis.lower() and 'credited' in avis.lower())
         t('the footer repeats that it is not a commercial offer',
           'not a commercial offer' in (pg.evaluate("document.querySelector('footer').textContent") or '').lower())
         t('the counter of copied listings reads zero', pg.evaluate(
@@ -103,8 +105,11 @@ def main():
             "window.JX.every(l=>!('company' in l) && !('phone' in l) && !('description' in l))"))
         t('no image is loaded from outside this site', pg.evaluate(
             "Array.from(document.images).every(i=>i.src.startsWith(location.origin))"))
-        t('the plates are drawn in the page as SVG',
-          pg.evaluate("document.querySelectorAll('.plate svg').length") >= 60)
+        t('every card has a plate — a photograph or a drawing, never nothing',
+          pg.evaluate("Array.from(document.querySelectorAll('.card .plate'))"
+                      ".every(p=>p.querySelector('svg')||p.querySelector('img'))"))
+        t('most plates are still drawn in the page as SVG',
+          pg.evaluate("document.querySelectorAll('.plate svg').length") >= 40)
 
         # ---- red house colour, and the image slot ----
         # The client asked for red. Assert it, so a future edit cannot quietly
@@ -118,10 +123,38 @@ def main():
             "const m=c.match(/\\d+/g).map(Number); return m[0]>m[1]+50;})()"))
         t('every record carries an image slot, so real photos need no code change',
           pg.evaluate("window.JX.every(l=>'img' in l)"))
-        t('no aircraft photograph is reproduced in this preview',
-          pg.evaluate("window.JX.every(l=>!l.img)"))
-        t('no broken image is left on the page', pg.evaluate(
-            "Array.from(document.images).every(i=>i.complete && i.naturalWidth>0)"))
+        # Photographs are allowed now, but only on licence terms we can defend.
+        photos = pg.evaluate("window.JX.filter(l=>l.img).length")
+        t('some listings carry a real photograph', photos > 0, 'count=%s' % photos)
+        t('every photograph is served from this site, never hotlinked', pg.evaluate(
+            "window.JX.filter(l=>l.img).every(l=>!/^https?:/i.test(l.img))"))
+        t('no photograph comes from the scraped marketplace', pg.evaluate(
+            "window.JX.every(l=>!/sandhills|controller\\.com|tradeaplane/i.test("
+            "(l.img||'')+JSON.stringify(l.credit||{})))"))
+        t('every photograph names its author', pg.evaluate(
+            "window.JX.filter(l=>l.img).every(l=>l.credit && l.credit.auteur.length>1)"))
+        t('every photograph names its licence', pg.evaluate(
+            "window.JX.filter(l=>l.img).every(l=>l.credit && l.credit.licence.length>1)"))
+        t('every licence used permits reuse', pg.evaluate(
+            "window.JX.filter(l=>l.img).every(l=>"
+            "/public domain|cc0|cc by/i.test(l.credit.licence))"))
+        t('no non-commercial or no-derivatives licence slipped in', pg.evaluate(
+            "window.JX.filter(l=>l.img).every(l=>"
+            "!/non-?commercial|\\bND\\b/i.test(l.credit.licence))"))
+        t('every photograph links back to its source page', pg.evaluate(
+            "window.JX.filter(l=>l.img).every(l=>/^https:\\/\\/commons\\.wikimedia\\.org\\//"
+            ".test(l.credit.source))"))
+        t('the credit is printed on every photographed card',
+          pg.evaluate("document.querySelectorAll('.card .credit').length") == photos)
+        t('the footer states where the photographs come from',
+          'wikimedia' in (pg.evaluate("document.querySelector('footer').textContent") or '').lower())
+        # The photos are lazy-loaded, so an off-screen image is legitimately
+        # not decoded yet. Only assert on the ones the browser has fetched.
+        t('no image that has loaded is broken', pg.evaluate(
+            "Array.from(document.images).filter(i=>i.complete)"
+            ".every(i=>i.naturalWidth>0)"))
+        t('at least some photographs actually decoded', pg.evaluate(
+            "Array.from(document.images).filter(i=>i.complete&&i.naturalWidth>0).length") > 0)
         t('every card is a real button, not a clickable div', pg.evaluate(
             "Array.from(document.querySelectorAll('.card')).every(c=>c.tagName==='BUTTON')"))
 

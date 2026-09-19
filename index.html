@@ -6,15 +6,17 @@
 <title>jxjets — aircraft marketplace, working preview</title>
 <meta name="description" content="Working preview of jxjets: an aircraft marketplace with a masonry listing grid, live filters by category, manufacturer, year and price, a detail sheet, an animation showcase and a feedback section.">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23c9a227'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='bold' text-anchor='middle' fill='%23140f04'>J</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23cf2418'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='bold' text-anchor='middle' fill='%23fff5f4'>J</text></svg>">
 </head>
 <body>
 
 <div class="avis">
   <div class="wrap">
     <b>Demonstration.</b> Every aircraft, price, location, reference and review below is
-    generated for this preview. No real listing, photograph, seller name or telephone number
-    is reproduced here — the images are drawn in the page, not downloaded from anyone.
+    generated for this preview. No listing, seller name or telephone number from any real
+    marketplace is reproduced. Photographs, where there are any, come from Wikimedia Commons
+    under licences that permit reuse and are credited on the card; every other plate is
+    drawn in the page.
   </div>
 </div>
 
@@ -233,6 +235,7 @@
       <div class="dcell"><div class="k">Reference</div><div class="v" id="dref">—</div></div>
       <div class="dcell"><div class="k">Status</div><div class="v" id="detat">—</div></div>
     </div>
+    <div class="dcredit" id="dcredit"></div>
     <p class="note">Generated example. In the live platform this sheet carries the airframe
     and engine record, the avionics list, the inspection status and the seller's own photographs
     — loaded from inventory you hold the rights to publish.</p>
@@ -242,11 +245,14 @@
 <footer>
   <div class="wrap fg">
     <div>jxjets — working preview. Built by Anirudha Talmale.</div>
-    <div>Demonstration only. Not a commercial offer.</div>
+    <div>Demonstration only. Not a commercial offer.<br>
+    Photographs: Wikimedia Commons contributors, under CC BY / CC BY-SA / public domain.
+    Each photograph names its author, its licence and its source on the aircraft sheet.</div>
   </div>
 </footer>
 
 <script src="assets/data.js"></script>
+<script src="assets/photos.js"></script>
 <script src="assets/app.js"></script>
 <script>
   document.getElementById('n-total').textContent = (window.JX || []).length;

@@ -125,6 +125,14 @@ nav a:hover{color:var(--txt)}
 }
 .etat.neuf{color:var(--ok);border-color:#1e4d3c}
 .etat.offre{color:var(--warn);border-color:#5a4718}
+.credit{
+  position:absolute;right:8px;bottom:8px;max-width:calc(100% - 16px);
+  font-size:10.6px;line-height:1.35;color:#e7dede;background:rgba(6,8,12,.62);
+  border-radius:6px;padding:3px 7px;backdrop-filter:blur(3px);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.dcredit{font-size:12.6px;color:var(--faint);margin-top:12px}
+.dcredit a{color:var(--accent)}
 .cbody{padding:15px 16px 17px}
 .ctype{font-size:12.2px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
 .card h3{margin:5px 0 10px;font-size:17.4px;line-height:1.25;letter-spacing:-.01em}
