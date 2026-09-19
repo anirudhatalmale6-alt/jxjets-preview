@@ -50,23 +50,48 @@
   /* The card image is drawn, not downloaded. Each aircraft gets a stable hue
      from its data, so the grid is varied without a single external file —
      and without borrowing anybody's photographs. */
+  /* A real photograph wins whenever there is one. The drawn plate is the
+     fallback, not the goal — the day the inventory carries images it needs no
+     code change, only an `img` on the record. */
   function plate(l, big) {
-    var h = l.hue, h2 = (h + 38) % 360;
-    var id = 'g' + l.ref.replace(/\W/g, '');
+    if (l.img) {
+      return '<img src="' + esc(l.img) + '" alt="' +
+        esc(l.year + ' ' + l.mfr + ' ' + l.model) + '" loading="lazy" ' +
+        'style="width:100%;height:100%;object-fit:cover">';
+    }
+    var h = l.hue, h2 = (h + 26) % 360;
+    var id = 'g' + l.ref.replace(/\W/g, '') + (big ? 'b' : '');
     return '' +
-      '<svg viewBox="0 0 320 200" role="img" aria-label="' + esc(l.year + ' ' + l.mfr + ' ' + l.model) + '">' +
-      '<defs><linearGradient id="' + id + (big ? 'b' : '') + '" x1="0" y1="0" x2="1" y2="1">' +
-      '<stop offset="0" stop-color="hsl(' + h + ',42%,26%)"/>' +
-      '<stop offset="1" stop-color="hsl(' + h2 + ',38%,12%)"/></linearGradient></defs>' +
-      '<rect width="320" height="200" fill="url(#' + id + (big ? 'b' : '') + ')"/>' +
-      '<circle cx="258" cy="44" r="26" fill="hsl(' + h + ',60%,62%)" opacity=".18"/>' +
+      '<svg viewBox="0 0 320 200" role="img" aria-label="' +
+        esc(l.year + ' ' + l.mfr + ' ' + l.model) + ', illustration">' +
+      '<defs>' +
+        '<linearGradient id="' + id + '" x1="0" y1="0" x2="0.4" y2="1">' +
+          '<stop offset="0" stop-color="hsl(' + h + ',46%,30%)"/>' +
+          '<stop offset=".55" stop-color="hsl(' + h + ',42%,18%)"/>' +
+          '<stop offset="1" stop-color="hsl(' + h2 + ',34%,10%)"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="' + id + 'h" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="hsl(' + h + ',60%,60%)" stop-opacity=".22"/>' +
+          '<stop offset="1" stop-color="hsl(' + h + ',60%,60%)" stop-opacity="0"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      '<rect width="320" height="200" fill="url(#' + id + ')"/>' +
+      /* low sun */
+      '<circle cx="256" cy="52" r="30" fill="hsl(' + h + ',72%,64%)" opacity=".16"/>' +
+      '<circle cx="256" cy="52" r="13" fill="hsl(' + h + ',80%,72%)" opacity=".22"/>' +
+      /* horizon glow + ground line */
+      '<rect x="0" y="120" width="320" height="80" fill="url(#' + id + 'h)"/>' +
+      '<path d="M0 152 L320 152" stroke="hsl(' + h + ',40%,88%)" stroke-opacity=".16" stroke-width="1.1"/>' +
+      '<path d="M0 168 L320 168" stroke="hsl(' + h + ',40%,88%)" stroke-opacity=".08" stroke-width="1"/>' +
+      /* cloud bands, thin enough not to fight the silhouette */
+      '<g stroke="hsl(' + h + ',30%,92%)" stroke-opacity=".10" stroke-width="2" stroke-linecap="round">' +
+        '<path d="M28 44 h44"/><path d="M40 58 h26"/><path d="M232 96 h38"/>' +
+      '</g>' +
       '<g transform="translate(160,108) rotate(' + l.tilt + ') translate(-160,-108)" ' +
-      'fill="none" stroke="hsl(' + h + ',48%,82%)" stroke-opacity=".62" stroke-width="2.4" ' +
+      'fill="none" stroke="hsl(' + h + ',52%,88%)" stroke-opacity=".70" stroke-width="2.4" ' +
       'stroke-linecap="round" stroke-linejoin="round">' +
       silhouette(l.shape) +
       '</g>' +
-      '<g opacity=".5" stroke="hsl(' + h + ',40%,90%)" stroke-width="1.1">' +
-      '<path d="M0 158 L320 158" stroke-opacity=".14"/></g>' +
       '</svg>';
   }
 

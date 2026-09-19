@@ -119,8 +119,11 @@ def main():
                 'city': ville,
                 'country': pays,
                 'status': RND.choice(ETATS),
-                # a stable hue per aircraft, used to draw the SVG plate
-                'hue': RND.randint(0, 359),
+                # a stable hue per aircraft, used to draw the SVG plate.
+                # Kept inside the red family: a red site with rainbow cards
+                # reads as an accident rather than a palette.
+                'hue': RND.choice([348, 352, 356, 0, 4, 8, 12, 16, 20, 24,
+                                   358, 6, 14, 344]),
                 'tilt': round(RND.uniform(-7, 7), 1),
                 # silhouette family — a helicopter drawn as an airliner is the
                 # kind of detail a buyer notices immediately
@@ -130,6 +133,10 @@ def main():
                 # varied plate heights are what makes the masonry visible;
                 # taken from the data so a rebuild does not reshuffle the grid
                 'ar': RND.choice(['16/10', '16/10', '4/3', '16/9', '5/4']),
+                # A photograph goes here when there is one to show. Empty in
+                # the preview on purpose: the source file's photos belong to
+                # Sandhills and to the sellers, so none is reproduced.
+                'img': '',
             })
 
     RND.shuffle(listings)

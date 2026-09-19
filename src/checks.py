@@ -105,6 +105,23 @@ def main():
             "Array.from(document.images).every(i=>i.src.startsWith(location.origin))"))
         t('the plates are drawn in the page as SVG',
           pg.evaluate("document.querySelectorAll('.plate svg').length") >= 60)
+
+        # ---- red house colour, and the image slot ----
+        # The client asked for red. Assert it, so a future edit cannot quietly
+        # drift the palette back without a failing check.
+        t('the house colour is red, not gold', pg.evaluate(
+            "(()=>{const c=getComputedStyle(document.querySelector('.prix')).color;"
+            "const m=c.match(/\\d+/g).map(Number);"
+            "return m[0]>150 && m[0] > m[1]+60 && m[0] > m[2]+60;})()"),)
+        t('the demonstration banner follows the red palette', pg.evaluate(
+            "(()=>{const c=getComputedStyle(document.querySelector('.avis b')).color;"
+            "const m=c.match(/\\d+/g).map(Number); return m[0]>m[1]+50;})()"))
+        t('every record carries an image slot, so real photos need no code change',
+          pg.evaluate("window.JX.every(l=>'img' in l)"))
+        t('no aircraft photograph is reproduced in this preview',
+          pg.evaluate("window.JX.every(l=>!l.img)"))
+        t('no broken image is left on the page', pg.evaluate(
+            "Array.from(document.images).every(i=>i.complete && i.naturalWidth>0)"))
         t('every card is a real button, not a clickable div', pg.evaluate(
             "Array.from(document.querySelectorAll('.card')).every(c=>c.tagName==='BUTTON')"))
 
