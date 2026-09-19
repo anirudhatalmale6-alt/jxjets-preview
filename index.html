@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jxjets — aircraft marketplace, working preview</title>
+<meta name="description" content="Working preview of jxjets: an aircraft marketplace with a masonry listing grid, live filters by category, manufacturer, year and price, a detail sheet, an animation showcase and a feedback section.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23c9a227'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='bold' text-anchor='middle' fill='%23140f04'>J</text></svg>">
+</head>
+<body>
+
+<div class="avis">
+  <div class="wrap">
+    <b>Demonstration.</b> Every aircraft, price, location, reference and review below is
+    generated for this preview. No real listing, photograph, seller name or telephone number
+    is reproduced here — the images are drawn in the page, not downloaded from anyone.
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <span class="mk">JX</span>
+      <span>jx<em>jets</em></span>
+    </a>
+    <nav>
+      <a href="#inventory">Inventory</a>
+      <a href="#motion">Motion</a>
+      <a href="#feedback">Feedback</a>
+    </nav>
+    <a class="btn" href="#feedback">Sell your aircraft</a>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap">
+    <div class="kick">Aircraft marketplace</div>
+    <h1>Every airframe, filtered the way buyers actually search.</h1>
+    <p>Category, manufacturer, year, hours, price and base — combined, not one at a time.
+    The grid below is a real masonry layout and every control on it works: change a filter
+    and the count changes with it.</p>
+    <div class="actions">
+      <a class="btn" href="#inventory">Browse the inventory</a>
+      <a class="btn ghost" href="#motion">See the motion work</a>
+    </div>
+
+    <div class="chiffres">
+      <div class="ch"><div class="v" id="n-total">—</div><div class="l">Aircraft shown</div></div>
+      <div class="ch"><div class="v" id="n-cat">—</div><div class="l">Categories</div></div>
+      <div class="ch"><div class="v" id="n-mfr">—</div><div class="l">Manufacturers</div></div>
+      <div class="ch"><div class="v">0</div><div class="l">Real listings copied</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="inventory">
+  <div class="wrap">
+    <div class="shead">
+      <div class="kick">Inventory</div>
+      <h2>Filter first, scroll second</h2>
+      <p>The filters run in the page, with no reload. Sorting, the price ceiling and the
+      year floor all recombine with the search box.</p>
+    </div>
+
+    <div class="filtres">
+      <div class="frow">
+        <div class="f">
+          <label for="fq">Search</label>
+          <input id="fq" type="search" placeholder="Gulfstream, Phenom, Geneva, JX-4163…" autocomplete="off">
+        </div>
+        <div class="f">
+          <label for="fcat">Category</label>
+          <select id="fcat"></select>
+        </div>
+        <div class="f">
+          <label for="fmfr">Manufacturer</label>
+          <select id="fmfr"></select>
+        </div>
+        <div class="f">
+          <label for="ftri">Sort by</label>
+          <select id="ftri">
+            <option value="price-desc">Price, high to low</option>
+            <option value="price-asc">Price, low to high</option>
+            <option value="year-desc">Year, newest first</option>
+            <option value="hours-asc">Hours, lowest first</option>
+          </select>
+        </div>
+        <div class="f">
+          <label for="fprix">Price ceiling</label>
+          <div class="rng">
+            <input id="fprix" type="range" min="20000" max="35000000" step="10000">
+            <output id="oprix">—</output>
+          </div>
+          <label for="fannee" style="margin-top:10px">Year from</label>
+          <div class="rng">
+            <input id="fannee" type="range" min="0" max="2024" step="1" value="0">
+            <output id="oannee">any</output>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fbar">
+      <div class="compte" id="compte">—</div>
+      <div class="puces">
+        <button class="puce" type="button" aria-pressed="false" data-cat="Jet Aircraft">Jets</button>
+        <button class="puce" type="button" aria-pressed="false" data-cat="Turboprop Aircraft">Turboprops</button>
+        <button class="puce" type="button" aria-pressed="false" data-cat="Turbine Helicopters">Turbine helicopters</button>
+        <button class="puce" type="button" aria-pressed="false" data-cat="Piston Single Aircraft">Piston singles</button>
+      </div>
+    </div>
+
+    <div class="mason" id="grille"></div>
+    <div class="vide" id="vide" hidden>Nothing matches those filters. Widen the price ceiling or clear the search.</div>
+  </div>
+</section>
+
+<section id="motion">
+  <div class="wrap">
+    <div class="shead">
+      <div class="kick">Motion</div>
+      <h2>The animations, running here</h2>
+      <p>These are live, embedded from where they already run. They are not videos and not
+      screenshots — each frame below is the real page, playing.</p>
+    </div>
+    <div class="anims">
+      <div class="anim">
+        <div class="frame"><iframe src="https://hakimadjaoudi.com/project/rymd/index.html" title="Mouse Stars animation" loading="lazy"></iframe></div>
+        <div class="cap"><b>Mouse Stars</b><a href="https://hakimadjaoudi.com/project/rymd/index.html" target="_blank" rel="noopener">Open full size →</a></div>
+      </div>
+      <div class="anim">
+        <div class="frame"><iframe src="https://hakimadjaoudi.com/project/trassel/" title="Abstract painting animation" loading="lazy"></iframe></div>
+        <div class="cap"><b>Trassel</b><a href="https://hakimadjaoudi.com/project/trassel/" target="_blank" rel="noopener">Open full size →</a></div>
+      </div>
+      <div class="anim">
+        <div class="frame"><iframe src="https://hakimadjaoudi.com/project/bacterium/01/" title="Bacteria multiplication game" loading="lazy"></iframe></div>
+        <div class="cap"><b>Bacterium</b><a href="https://hakimadjaoudi.com/project/bacterium/01/" target="_blank" rel="noopener">Open full size →</a></div>
+      </div>
+      <div class="anim">
+        <div class="frame"><iframe src="https://hakimadjaoudi.com/project/flipside/" title="Flipside animation" loading="lazy"></iframe></div>
+        <div class="cap"><b>Flipside</b><a href="https://hakimadjaoudi.com/project/flipside/" target="_blank" rel="noopener">Open full size →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="wrap">
+    <div class="shead">
+      <div class="kick">Feedback</div>
+      <h2>What buyers and sellers say</h2>
+      <p>The three cards below are <b>templates, not testimonials</b>. They are written as
+      placeholders on purpose: a review section filled with quotes nobody said is worth less
+      than an empty one. Send me real ones and they replace these exactly as they sit.</p>
+    </div>
+
+    <div class="avisclients">
+      <div class="fb gab">
+        <div class="gabtag">Template</div>
+        <div class="et">★★★★★</div>
+        <blockquote>Two or three sentences from a real buyer: what they were looking for,
+        what the search did for them, and how the handover went.</blockquote>
+        <div class="qui">Name, role — city</div>
+      </div>
+      <div class="fb gab">
+        <div class="gabtag">Template</div>
+        <div class="et">★★★★★</div>
+        <blockquote>A seller's side: how long the aircraft had been listed elsewhere, and
+        what changed once it was here.</blockquote>
+        <div class="qui">Name, operator — city</div>
+      </div>
+      <div class="fb gab">
+        <div class="gabtag">Template</div>
+        <div class="et">★★★★★</div>
+        <blockquote>A broker or a maintenance shop: the part of the process they touched,
+        in their own words.</blockquote>
+        <div class="qui">Name, company — city</div>
+      </div>
+    </div>
+
+    <form class="fbform" id="fbform">
+      <div class="shead" style="margin-bottom:14px">
+        <h2 style="font-size:20px;margin:0 0 6px">Leave feedback</h2>
+        <p style="font-size:14.4px">Working form. In this preview nothing leaves your browser.</p>
+      </div>
+      <div class="frow2">
+        <div class="f">
+          <label for="fbnom">Your name</label>
+          <input id="fbnom" type="text" placeholder="Name" required>
+        </div>
+        <div class="f">
+          <label for="fbville">City</label>
+          <input id="fbville" type="text" placeholder="City">
+        </div>
+      </div>
+      <div class="f" style="margin-top:12px">
+        <label id="lblnote">Rating</label>
+        <div class="stars" role="group" aria-labelledby="lblnote">
+          <button type="button" aria-pressed="false" aria-label="1 star">★</button>
+          <button type="button" aria-pressed="false" aria-label="2 stars">★</button>
+          <button type="button" aria-pressed="false" aria-label="3 stars">★</button>
+          <button type="button" aria-pressed="false" aria-label="4 stars">★</button>
+          <button type="button" aria-pressed="false" aria-label="5 stars">★</button>
+        </div>
+      </div>
+      <div class="f" style="margin-top:12px">
+        <label for="fbmsg">Your feedback</label>
+        <textarea id="fbmsg" placeholder="What you were looking for, and how it went."></textarea>
+      </div>
+      <button class="btn" type="submit" style="margin-top:14px">Send feedback</button>
+      <div class="envoye" id="fbok" role="status"></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<dialog id="detail" aria-labelledby="dtitre">
+  <div class="dhead">
+    <div class="plate" id="dplate"></div>
+    <button class="dclose" id="dfermer" type="button" aria-label="Close">×</button>
+  </div>
+  <div class="dbody">
+    <h2 id="dtitre">—</h2>
+    <div class="ctype" id="dsous">—</div>
+    <div class="prix" style="font-size:25px;margin-top:12px" id="dprix">—</div>
+    <div class="dgrid">
+      <div class="dcell"><div class="k">Total time</div><div class="v" id="dheures">—</div></div>
+      <div class="dcell"><div class="k">Year</div><div class="v" id="dannee">—</div></div>
+      <div class="dcell"><div class="k">Reference</div><div class="v" id="dref">—</div></div>
+      <div class="dcell"><div class="k">Status</div><div class="v" id="detat">—</div></div>
+    </div>
+    <p class="note">Generated example. In the live platform this sheet carries the airframe
+    and engine record, the avionics list, the inspection status and the seller's own photographs
+    — loaded from inventory you hold the rights to publish.</p>
+  </div>
+</dialog>
+
+<footer>
+  <div class="wrap fg">
+    <div>jxjets — working preview. Built by Anirudha Talmale.</div>
+    <div>Demonstration only. Not a commercial offer.</div>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  document.getElementById('n-total').textContent = (window.JX || []).length;
+  document.getElementById('n-cat').textContent = (window.JX_CATS || []).length;
+  document.getElementById('n-mfr').textContent = (window.JX_MFRS || []).length;
+</script>
+</body>
+</html>
