@@ -207,8 +207,14 @@
 
     var max = Math.max.apply(null, all.map(function (l) { return l.price; }));
     var pr = $('#fprix');
-    pr.max = max; pr.value = max; f.maxPrice = max;
-    $('#oprix').textContent = usd(max);
+    /* Align the ceiling UP to the slider's own step grid. Here the numbers
+       happen to land on it, but a browser clamps an off-grid max DOWN — which
+       would silently hide the single most expensive aircraft the day the price
+       band changes. Found on the machinery build; fixed here before it bites. */
+    var pas = +pr.step || 1, bas = +pr.min || 0;
+    var plafond = bas + Math.ceil((max - bas) / pas) * pas;
+    pr.max = plafond; pr.value = plafond; f.maxPrice = plafond;
+    $('#oprix').textContent = usd(plafond);
 
     $('#fq').addEventListener('input', function () { f.q = this.value; rendu(); });
     $('#fcat').addEventListener('change', function () { f.cat = this.value; rendu(); });
